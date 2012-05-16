@@ -1,2 +1,3 @@
 source :rubygems
-gem "cucumber"
+gem 'rake'
+gem 'cucumber', '0.10.7'
