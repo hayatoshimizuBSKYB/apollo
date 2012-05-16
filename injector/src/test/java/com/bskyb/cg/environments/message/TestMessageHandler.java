@@ -14,36 +14,30 @@ limitations under the License.
 
 package com.bskyb.cg.environments.message;
 
-import junit.framework.TestCase;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.bskyb.cg.environments.utils.DynamicProperties;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 //specifies the Spring configuration to load for this test fixture
-@ContextConfiguration(locations={"classpath:context/messageHandlerAppCtx.xml"})
+@ContextConfiguration(locations = {"classpath:context/messageHandlerAppCtx.xml"})
 
-public class TestMessageHandler extends TestCase {
-	@Autowired
-	private ApplicationContext applicationContext;
+public class TestMessageHandler {
+    @Autowired
+    private ApplicationContext applicationContext;
 
-	@Test
-    public void testGetMessageFormat() throws Exception{
+    @Test
+    public void testGetMessageFormat() throws Exception {
 
-    	MessageHandler mh = (MessageHandler) applicationContext.getBean("messageHandler");
-    	byte[] rawMessage = new String("auditd||2012-03-22T11:15:32.277+00:00||chi-cg-dat-app-256||imklog 3.22.1, log source = /proc/kmsg started.||").getBytes();
-		mh.processMessage(rawMessage);
-    	
-    	
+        MessageHandler mh = (MessageHandler) applicationContext.getBean("messageHandler");
+        byte[] rawMessage = new String("auditd||2012-03-22T11:15:32.277+00:00||chi-cg-dat-app-256||imklog 3.22.1, log source = /proc/kmsg started.||").getBytes();
+        mh.processMessage(rawMessage);
+
+
     }
-    
-	
+
+
 }

@@ -1,1 +1,0 @@
-pam_sm_authenticate: username = [nand]

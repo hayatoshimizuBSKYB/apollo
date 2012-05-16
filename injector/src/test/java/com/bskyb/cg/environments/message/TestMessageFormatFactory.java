@@ -14,34 +14,28 @@ limitations under the License.
 
 package com.bskyb.cg.environments.message;
 
-import junit.framework.TestCase;
-
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.bskyb.cg.environments.utils.DynamicProperties;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 //specifies the Spring configuration to load for this test fixture
-@ContextConfiguration(locations={"classpath:context/messageFormatFactoryAppCtx.xml"})
+@ContextConfiguration(locations = {"classpath:context/messageFormatFactoryAppCtx.xml"})
 
-public class TestMessageFormatFactory extends TestCase {
-	@Autowired
-	private ApplicationContext applicationContext;
+public class TestMessageFormatFactory {
+    @Autowired
+    private ApplicationContext applicationContext;
 
-	@Test
-    public void testGetMessageFormat() throws Exception{
+    @Test
+    public void testGetMessageFormat() throws Exception {
 
-    	MessageFormatFactory mff = (MessageFormatFactory) applicationContext.getBean("messageFormatFactory");
-    	MessageFormat mf = mff.getMessageFormat("auditd");
-    	
+        MessageFormatFactory mff = (MessageFormatFactory) applicationContext.getBean("messageFormatFactory");
+        MessageFormat mf = mff.getMessageFormat("auditd");
+
     }
-    
-	
+
+
 }

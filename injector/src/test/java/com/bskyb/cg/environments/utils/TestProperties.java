@@ -14,8 +14,6 @@ limitations under the License.
 
 package com.bskyb.cg.environments.utils;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,23 +23,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 //specifies the Spring configuration to load for this test fixture
-@ContextConfiguration(locations={"classpath:context/propertiesAppCtx.xml"})
+@ContextConfiguration(locations = {"classpath:context/propertiesAppCtx.xml"})
 
-public class TestProperties extends TestCase {
+public class TestProperties {
 
-	private DynamicProperties dynamicProperties;
+    private DynamicProperties dynamicProperties;
 
-	@Autowired
+    @Autowired
     public void setProperties(DynamicProperties dynamicProperties) {
         this.dynamicProperties = dynamicProperties;
     }
-	
-	@Test
-    public void testLoadProperties() throws Exception{
-    	PropertiesConfiguration dynamicPropertiesConfigurer = dynamicProperties.getConfigure();
 
-    	
+    @Test
+    public void testLoadProperties() throws Exception {
+        PropertiesConfiguration dynamicPropertiesConfigurer = dynamicProperties.getConfigure();
+
+
     }
-    
-	
+
+
 }

@@ -34,7 +34,7 @@ public class TestAuditdMessageFormat {
 
 	private MessageFormat auditdMessageFormat ;
 	
-	private final static String testMessageFile = "resources/logMessages/syslog1.txt";
+	private final static String testMessageFile = "logMessages/syslog1.txt";
 	
 	public final static int MAX_MESSAGE_SIZE =  64*1024;
 	private final static String audtdDelimiter = "||";
@@ -68,15 +68,12 @@ public class TestAuditdMessageFormat {
 	@Before
 	public  void setUp() throws Exception {
 
-		File file = new File(testMessageFile);
-		
-    	FileInputStream fis = new FileInputStream(file);
-    	BufferedInputStream	bis = new BufferedInputStream(fis);
+    	BufferedInputStream	bis = new BufferedInputStream(getClass().getClassLoader().getResourceAsStream(testMessageFile));
 
 
     	while (bis.read(b) != -1) {}
  
-        fis.close();
+
 
 	}
 	
