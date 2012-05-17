@@ -1,0 +1,13 @@
+require 'rubygems'
+require 'cucumber'
+require 'cucumber/rake/task'
+
+CUCUMBER_OPTIONS = ENV['CUCUMBER_OPTS']
+ENV['CUCUMBER_OPTS'] = nil
+
+task :default => :features
+
+desc 'run cucumber tests'
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "#{CUCUMBER_OPTIONS} --strict"
+end
