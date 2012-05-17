@@ -8,7 +8,6 @@
 	<import resource="logServerAppCtx.xml" />
 	<import resource="messageHandlerAppCtx.xml" />
 	<import resource="messageFormatAppCtx.xml" />
-	<import resource="queueAppCtx.xml" />
 	<import resource="propertiesAppCtx.xml" />
 	<import resource="cassandraBusinessContext.xml" />
 	

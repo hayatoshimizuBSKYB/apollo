@@ -20,16 +20,15 @@ import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.UUID;
 
+import com.bskyb.cg.environments.hash.PersistentHash;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.bskyb.cg.environments.cassandra.CassandraConfigurationBuilder;
 import com.bskyb.cg.environments.data.MessageDao;
 import com.bskyb.cg.environments.data.MessageDaoFactory;
-import com.bskyb.cg.environments.queue.Queue;
 
 
 @ContextConfiguration(locations={"classpath:context/messageHandlerAppCtx.xml"})
@@ -45,7 +44,7 @@ public class MessageHandler {
 	private CassandraConfigurationBuilder cassandraConfigurationBuilder ;
 
 	@Autowired
-	private Queue queue;
+	private PersistentHash persistentHash;
 
 	
 	public CassandraConfigurationBuilder getCassandraConfigurationBuilder() {
@@ -114,13 +113,13 @@ public class MessageHandler {
 			String syslogMsg = new String(logMessage.getMessage());
 			String rowKey = hostname + ":" + date;
 
-			queue.add(key,logMessage);
+			persistentHash.add(key,logMessage);
 			cassandraConfigurationBuilder.setMsgType(msgtype);
 			MessageDaoFactory  messageDaoFactory = new MessageDaoFactory(cassandraConfigurationBuilder);
 			
 			MessageDao messageDao = messageDaoFactory.getObject();
 			messageDao.insert(cassandrauuid, epochtime, msgtype, syslogMsg, rowKey, hostname);
-			queue.remove(key);
+			persistentHash.remove(key);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,13 +129,13 @@ public class MessageHandler {
 	}
 
 
-	public Queue getQueue() {
-		return queue;
+	public PersistentHash getPersistentHash() {
+		return persistentHash;
 	}
 
 
-	public void setQueue(Queue queue) {
-		this.queue = queue;
+	public void setPersistentHash(PersistentHash persistentHash) {
+		this.persistentHash = persistentHash;
 	}
 
 

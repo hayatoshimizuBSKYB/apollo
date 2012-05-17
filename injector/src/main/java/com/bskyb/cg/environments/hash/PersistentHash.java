@@ -13,7 +13,7 @@ limitations under the License.
 
 
 
-package com.bskyb.cg.environments.queue;
+package com.bskyb.cg.environments.hash;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -36,7 +36,7 @@ import com.bskyb.cg.environments.utils.FileExtFilter;
 
 
 
-public class Queue {
+public class PersistentHash {
     private final String dirname;
 
     private ConcurrentHashMap<String, Message> hash;
@@ -45,7 +45,7 @@ public class Queue {
     
     private final static String STOREFILEEXT = "ser";
     
-    public Queue(String dirname) throws IOException {
+        public PersistentHash(String dirname) throws IOException {
         this.dirname = dirname;
        
         hash = new ConcurrentHashMap<String, Message>();
@@ -93,7 +93,6 @@ public class Queue {
         
         hash.put(key, message);
         
-        return;
     }
     
     private void createEmptyStore(String dirname) throws IOException {
@@ -160,7 +159,7 @@ public class Queue {
         fos.flush(); fos.close();
     }
     
-    private synchronized void writeQueue(String newdirname) throws IOException {
+    private synchronized void writeHash(String newdirname) throws IOException {
         
     	FileOutputStream fos;
     	
@@ -189,7 +188,7 @@ public class Queue {
     private synchronized void refreshStore() throws IOException {
         String refreshedDirName = dirname + TEMPFILEPOSTFIX;
         
-        writeQueue(refreshedDirName);
+        writeHash(refreshedDirName);
         
         File refreshedDir = new File(refreshedDirName);
         File originalDir = new File(dirname);

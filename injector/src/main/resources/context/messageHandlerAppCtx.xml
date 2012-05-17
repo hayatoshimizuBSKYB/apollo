@@ -20,8 +20,8 @@
 	</property>
   </bean>
   <bean id="messageHandler" class="com.bskyb.cg.environments.message.MessageHandler" scope="prototype">
-	<property name="queue">
-	   	<ref bean="queue"/>
+	<property name="persistentHash">
+	   	<ref bean="persistentHash"/>
   	</property>
   		<property name="cassandraConfigurationBuilder">
 	   	<ref bean="cassandraConfigurationBuilder"/>
@@ -48,7 +48,7 @@
 		
   </bean>
   
-  <bean id="queue" class="com.bskyb.cg.environments.queue.Queue">
-	<constructor-arg name="dirname" value="${queue.store}" />
+  <bean id="persistentHash" class="com.bskyb.cg.environments.hash.PersistentHash">
+	<constructor-arg name="dirname" value="${persistentHash.store}" />
   </bean>
 </beans>

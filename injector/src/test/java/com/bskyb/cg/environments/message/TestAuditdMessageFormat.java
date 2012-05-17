@@ -14,21 +14,11 @@ limitations under the License.
 
 package com.bskyb.cg.environments.message;
 
-import static org.junit.Assert.*;
-
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.StreamCorruptedException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.bskyb.cg.environments.queue.Queue;
-import com.bskyb.cg.environments.utils.FileExtFilter;
 
 public class TestAuditdMessageFormat {
 

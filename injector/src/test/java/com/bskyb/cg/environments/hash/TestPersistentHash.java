@@ -12,7 +12,7 @@ limitations under the License.
 */
 
 
-package com.bskyb.cg.environments.queue;
+package com.bskyb.cg.environments.hash;
 
 import com.bskyb.cg.environments.message.LogMessage;
 import com.bskyb.cg.environments.message.Message;
@@ -27,10 +27,10 @@ import java.io.*;
 import static junit.framework.Assert.assertEquals;
 
 
-public class TestQueue {
+public class TestPersistentHash {
 
-    private static Queue resultQueue;
-    private static Queue messageQueue;
+    private static PersistentHash resultPersistentHash;
+    private static PersistentHash messagePersistentHash;
 
     private final static String testMessageDir = "src/test/resources/testmessages";
     private final static String testMessageStore = "out/testmessage/store";
@@ -44,8 +44,8 @@ public class TestQueue {
     public void testRemove() {
 
         try {
-            resultQueue.remove("key6");
-            assertEquals(resultQueue.size(), messageQueue.size() - 1);
+            resultPersistentHash.remove("key6");
+            assertEquals(resultPersistentHash.size(), messagePersistentHash.size() - 1);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,11 +56,11 @@ public class TestQueue {
         Message logMessage = null;
         try {
             logMessage = new LogMessage("key6", testLog.getBytes("UTF-8"));
-            resultQueue.add("key6", logMessage);
-            int size = resultQueue.size();
+            resultPersistentHash.add("key6", logMessage);
+            int size = resultPersistentHash.size();
 
 
-            String lastMessage = new String(resultQueue.remove("key6").getMessage());
+            String lastMessage = new String(resultPersistentHash.remove("key6").getMessage());
 
             assertEquals(lastMessage, testLog);
         } catch (Exception e) {
@@ -76,9 +76,9 @@ public class TestQueue {
         Message testMessage = null;
 
         try {
-            logMessage = resultQueue.lookup("key6");
+            logMessage = resultPersistentHash.lookup("key6");
             String resultMessage = new String(logMessage.getMessage());
-            testMessage = messageQueue.lookup("key6");
+            testMessage = messagePersistentHash.lookup("key6");
 
             String testLogMessage = new String(testMessage.getMessage());
             assertEquals(resultMessage, testLogMessage);
@@ -96,8 +96,8 @@ public class TestQueue {
         BufferedInputStream bis;
         Message messageEntry;
 
-        resultQueue = new Queue(resultMessageStore);
-        messageQueue = new Queue(testMessageStore);
+        resultPersistentHash = new PersistentHash(resultMessageStore);
+        messagePersistentHash = new PersistentHash(testMessageStore);
         File emptyDir = new File(testMessageDir);
         FilenameFilter onlyTxt = new FileExtFilter("txt");
         File[] files = emptyDir.listFiles(onlyTxt);
@@ -111,8 +111,8 @@ public class TestQueue {
             try {
                 while (bis.read(b) != -1) {
                     messageEntry = new LogMessage(file.getName(), b);
-                    resultQueue.add(file.getName(), messageEntry);
-                    messageQueue.add(file.getName(), messageEntry);
+                    resultPersistentHash.add(file.getName(), messageEntry);
+                    messagePersistentHash.add(file.getName(), messageEntry);
                 }
 
             } catch (ClassCastException e) {
@@ -127,8 +127,8 @@ public class TestQueue {
 
     @After
     public void tearDown() throws Exception {
-        resultQueue.clear();
-        messageQueue.clear();
+        resultPersistentHash.clear();
+        messagePersistentHash.clear();
 
     }
 
